@@ -1,13 +1,14 @@
-name: Weekly Update eLanka Chatbot
+name: Weekly Update
 
 on:
   schedule:
-    - cron: "0 2 * * 1"  # Every Monday at 2:00 AM UTC
-  workflow_dispatch:     # Also allows manual trigger
+    - cron: '0 0 * * 1'  # Every Monday at 00:00 UTC
+  workflow_dispatch:     # Optional: allows manual run
 
 jobs:
-  update:
+  update-content:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -20,19 +21,9 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install langchain langchain-openai langchain-community openai faiss-cpu tiktoken beautifulsoup4
 
-      - name: Run the update script
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      - name: Run update script
         run: |
           python update_elanka_bot.py
-
-      - name: Commit updated files
-        run: |
-          git config user.name "elanka-bot"
-          git config user.email "bot@elanka.com.au"
-          git add elanka_content.txt elanka_full_index/
-          git commit -m "🔄 Weekly content + index update"
-          git push
-
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
