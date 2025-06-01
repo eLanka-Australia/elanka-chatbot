@@ -8,6 +8,7 @@ on:
 jobs:
   update-content:
     runs-on: ubuntu-latest
+    environment: production  # ✅ Move this inside the job definition
 
     steps:
       - name: Checkout repo
@@ -27,4 +28,3 @@ jobs:
           python update_elanka_bot.py
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-environment: production
