@@ -27,3 +27,4 @@ jobs:
           python update_elanka_bot.py
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+environment: production
