@@ -8,8 +8,14 @@ from langchain_openai import OpenAIEmbeddings
 import os
 import time
 
-# 🔐 Set your OpenAI API key
-os.environ["OPENAI_API_KEY"] = "sk-..."  # Replace with your real key or use environment vars in PythonAnywhere
+# Read API key from environment (injected by GitHub Actions)
+openai_api_key = os.environ.get("OPENAI_API_KEY")
+if not openai_api_key:
+    raise ValueError("❌ OPENAI_API_KEY not found in environment.")
+
+# Optional: set it explicitly for libraries that expect it
+os.environ["OPENAI_API_KEY"] = openai_api_key
+
 
 # 📍 Your sitemap
 SITEMAP_URL = "https://www.elanka.com.au/sitemap.xml"
